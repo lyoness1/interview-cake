@@ -13,12 +13,16 @@ class LinkedListNode:
 def reverse_ll_inplace(head):
     """Rerverses a linked list in place"""
 
-    prev = head
-    if head.next:
-        curr = head.next
-    else:
-        raise Exception("List only has one node")
-    head.next = None
+    # catches edge case of list being empty
+    if not head:
+        return "List is empty"
+
+    # catches edge case of list having one element
+    if not head.next:
+        return head
+
+    prev = None
+    curr = head
 
     while curr:
         # get next node

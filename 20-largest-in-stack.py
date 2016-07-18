@@ -65,3 +65,24 @@ class MaxStack(Stack):
     def get_max(self):
         """returns a reference to the largest item in stack"""
         return self.largest
+
+
+# Interview cake's answer
+class MaxStack2:
+    def __init__(self):
+        self.stack = Stack()
+        self.max_stack = Stack()
+
+    def push(self, item):
+        self.stack.push(item)
+        if item >= self.max_stack.peek():
+            self.max_stack.push(item)
+
+    def pop(self):
+        item = self.stack.pop()
+        if item == self.max_stack.peek():
+            self.max_stack.pop()
+        return item
+
+    def get_max(self):
+        return self.max_stack.peek()

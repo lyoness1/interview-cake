@@ -121,7 +121,7 @@ def get_highest_product_of_3(arr):
 # 4: Hi Cal
 # Runtime: O(nlg(n)) so sort
 # Space: O(n) for output list
-# Edge Cases: 
+# Edge Cases: not sorted, just touching, engulfed second times, etc.
 def condense_meeting_times(arr):
     """Returns a lsit of tuples when everyone is avilable
 
@@ -161,6 +161,38 @@ def condense_meeting_times(arr):
     output.append((first_start, first_stop))
 
     return output
+
+
+# 5: Number of Ways to Make Change
+# Runtime: O(n*m) where n is amt and m is length of coins list
+# Space: O(n) for memo
+# Edge cases: 
+def num_ways(amt, coins):
+    """Returns the number of ways to make amt from denominations in coins list
+
+        >>> num_ways(4, [1, 2, 3])
+        4
+
+    """
+
+    # initialize histogram of ways to make *idx* amt for use of memoization
+    memo = [0] * (amt+1)
+    # making no change has one solution: no coins
+    memo[0] = 1
+
+    # use each denomination
+    for coin in coins: 
+        
+        # update each value in memo from current coins value through amt
+        for value in range(coin, amt+1):
+            
+            # use the current coin, update value's count with ways to make rmdr
+            remainder = value - coin
+            memo[value] += memo[remainder]
+
+    return memo[amt]
+
+
 
 
 

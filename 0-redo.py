@@ -193,9 +193,124 @@ def num_ways(amt, coins):
     return memo[amt]
 
 
+# 6: Rectangular Love
+# Runtime: O(1) - just four calculations
+# Space: O(1) - even though we make a new dict output?
+# Edge cases: share edge, no overlap, complete contained
+def find_intersection(rectA, rectB):
+    """Returns the intersection of two rectangles
+
+    >>> rectA = {
+    ...     'left_x': 1,
+    ...     'bottom_y': 1,
+    ...     'width': 4,
+    ...     'height': 3
+    ...     }
+    >>> rectB = {
+    ...     'left_x': 3,
+    ...     'bottom_y': 3,
+    ...     'width': 4,
+    ...     'height': 4
+    ...     }
+
+    >>> find_intersection(rectA, rectB)
+    {'width': 2, 'left_x': 3, 'bottom_y': 3, 'height': 1}
+
+    """
+
+    # find left of intersection
+    left_x = max(rectA['left_x'], rectB['left_x'])
+
+    # find bottom of interserction
+    bottom_y = max(rectA['bottom_y'], rectB['bottom_y'])
+
+    # find width of intersection as min of two right sides
+    right_side = min(rectA['left_x'] + rectA['width'],
+                     rectB['left_x'] + rectB['width'])
+    width = right_side - left_x
+
+    # find height of intersection as min of two tops
+    top = min(rectA['bottom_y'] + rectA['height'],
+              rectB['bottom_y'] + rectB['height'])
+    height = top - bottom_y
+
+    # account for no overlap
+    if height <= 0 or width <= 0:
+        return "There is no overlap"
+
+    intersection = {
+        'left_x': left_x,
+        'bottom_y': bottom_y,
+        'width': width,
+        'height': height
+    }
+
+    return intersection
 
 
+# 7: Temp Tracker
+"""
+    >>> Temps = TempTracker([60, 80, 70])
+    >>> Temps.insert(70)
+    >>> Temps.get_max()
+    80
+    >>> Temps.get_min()
+    60
+    >>> Temps.get_mean()
+    70.0
+    >>> Temps.get_mode()
+    70
 
+"""
+
+class TempTracker:
+    def __init__(self, temps=None):
+        assert temps is None or isinstance(temps, list), "temps must be a list"
+        self.histogram = [0] * 111
+        if temps:
+            for temp in temps:
+                assert isinstance(temp, int), "All temperatures must be ints"
+                self.histogram[temp] += 1
+        self.temps = temps
+        if temps:
+            self.max = max(temps)
+            self.min = min(temps)
+            self.len = len(temps)
+            self.sum = sum(temps)
+        else:
+            self.max = None
+            self.min = None
+            self.len = 0
+            self.sum = 0
+        if self.sum != 0:
+            self.mean = float(self.sum) / self.len
+        else: 
+            self.mean = None
+        self.mode = self.histogram.index(max(self.histogram))
+
+
+    def insert(self, temp):
+        assert isinstance(temp, int), "All temps must be ints"
+        self.temps.append(temp)
+        self.max = max(self.max, temp)
+        self.min = min(self.min, temp)
+        self.len += 1
+        self.sum += temp
+        self.mean = float(self.sum) / self.len
+        self.histogram[temp] += 1
+        self.mode = self.histogram.index(max(self.histogram))
+
+    def get_max(self):
+        return self.max
+
+    def get_min(self):
+        return self.min
+
+    def get_mean(self):
+        return self.mean
+
+    def get_mode(self):
+        return self.mode
 
 
 

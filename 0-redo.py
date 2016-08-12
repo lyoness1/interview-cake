@@ -29,10 +29,57 @@ def get_max_profit(arr):
 
 
 # 2: Product all ints except
-# Runtime: 
-# Space: 
-# Edge Cases: 
-def 
+# Runtime: O(2n) --> O(n)
+# Space: O(n) for output list
+# Edge Cases: zeros, two zeros, length 1
+def get_products(arr):
+    """Returns an array of products of all integers except at index
+
+        >>> get_products([1, 7, 3, 4])
+        [84, 12, 28, 21]
+
+        >>> get_products([0, 1, 2, 3])
+        [6, 0, 0, 0]
+
+        >>> get_products([0, 0, 1])
+        [0, 0, 0]
+
+        >>> get_products([])
+        [None]
+
+    """
+
+    # edge case: no numbers
+    if not arr:
+        return [None]
+
+    # initialize output
+    output = [1] * len(arr)
+
+    # initialie product before
+    product_before = 1
+
+    # go forward, incrementing product
+    for idx in range(len(arr)):
+        output[idx] *= product_before
+        product_before *= arr[idx]
+
+    # initialize product after
+    product_after = 1
+
+    # for backward, incrementing product
+    for idx in range(len(arr)-1, -1, -1):
+        output[idx] *= product_after
+        product_after *= arr[idx]
+
+    return output
+
+
+
+
+
+
+
 
 
 

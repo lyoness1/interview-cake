@@ -75,11 +75,47 @@ def get_products(arr):
     return output
 
 
+# 3: Highest Product of Three
+# Runtime: 
+# Space: 
+# Edge Cases: zeros, negatives
+def get_highest_product_of_3(arr):
+    """Returns the highest product of three integers from arr
 
+        >>> get_highest_product_of_3([1, 2, 3, 4, 5])
+        60
 
+        >>> get_highest_product_of_3([-10, -10, 0, 1, 2, 3])
+        300
 
+        >>> get_highest_product_of_3([-3, -3, -1, -5, -2])
+        -6
 
+    """
 
+    if len(arr) < 3:
+        raise Exception("Must have at least three integers")
+
+    max_product_3 = arr[0] * arr[1] * arr[2]
+    max_product_2 = arr[0] * arr[1]
+    highest = arr[0]
+    lowest = arr[0]
+    min_product_2 = arr[0] * arr[1]
+
+    for num in arr[2:]:
+        # max product of 3 is updated first, against new num
+        max_product_3 = max(max_product_3,
+                            min_product_2 * num,
+                            max_product_2 * num)
+
+        # update remaining variables
+        max_product_2 = max(max_product_2, highest * num, lowest * num)
+        min_product_2 = min(min_product_2, lowest * num, highest * num)
+        highest = max(highest, num)
+        lowest = min(lowest, num)
+        
+
+    return max_product_3
 
 
 

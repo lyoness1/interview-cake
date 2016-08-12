@@ -76,9 +76,9 @@ def get_products(arr):
 
 
 # 3: Highest Product of Three
-# Runtime: 
-# Space: 
-# Edge Cases: zeros, negatives
+# Runtime: O(n)
+# Space: O(1)
+# Edge Cases: zeros, negatives, not sorted
 def get_highest_product_of_3(arr):
     """Returns the highest product of three integers from arr
 
@@ -116,6 +116,56 @@ def get_highest_product_of_3(arr):
         
 
     return max_product_3
+
+
+# 4: Hi Cal
+# Runtime: O(nlg(n)) so sort
+# Space: O(n) for output list
+# Edge Cases: 
+def condense_meeting_times(arr):
+    """Returns a lsit of tuples when everyone is avilable
+
+        >>> condense_meeting_times([(0, 1), (3, 5), (4, 8), (10, 12), (9, 10)])
+        [(0, 1), (3, 8), (9, 12)]
+
+        >>> condense_meeting_times([(1, 2), (2, 3)])
+        [(1, 3)]
+
+        >>> condense_meeting_times([(1, 5), (2, 3)])
+        [(1, 5)]
+
+        >>> condense_meeting_times([(1, 10), (2, 6), (3, 5), (7, 9)])
+        [(1, 10)]
+
+    """
+
+    # O(nlg(n)) to sort by start times
+    arr.sort()
+
+    output = []
+
+    first_start, first_stop = arr[0]
+
+    for curr_start, curr_stop in arr[1:]:
+
+        # no overlap: update output, reassign first start/stop
+        if curr_start > first_stop:
+            output.append((first_start, first_stop))
+            first_start, first_stop = curr_start, curr_stop
+
+        # overlap: 
+        else: 
+            first_stop = max(first_stop, curr_stop)
+
+    # still have to add last condensed time
+    output.append((first_start, first_stop))
+
+    return output
+
+
+
+
+
 
 
 

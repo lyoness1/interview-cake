@@ -41,7 +41,7 @@ Conditions:
     >>> e = BinaryTreeNode(60)
     >>> b.insert_left(d)
     >>> b.insert_right(e)
-    >>> a.is_binary_search_tree_improved()
+    >>> a.is_binary_search_tree()
     False
 
 """
@@ -61,8 +61,24 @@ class BinaryTreeNode(object):
 
     def is_binary_search_tree(self):
 
+        stack = [(self, -float('inf'), float('inf'))]
 
+        while stack:
 
+            node, low_bound, up_bound = stack.pop()
+
+            if (node.value < low_bound) or (node.value > up_bound):
+                return False
+
+            # go left (current value becomes upper bound)
+            if node.left:
+                stack.append((node.left, low_bound, node.value))
+
+            # go right (current value becomes lower bound)
+            if node.right: 
+                stack.append((node.right, node.value, up_bound))
+
+        return True
 
 
 

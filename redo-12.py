@@ -13,7 +13,7 @@ def find_target(target, arr):
     ceiling = len(arr)
     steps = 0
 
-    while floor+1 < ceiling:
+    while floor < ceiling:
 
         # guess middle of range
         guess_idx = floor + (ceiling - floor) / 2
@@ -34,6 +34,50 @@ def find_target(target, arr):
             ceiling = guess_idx
 
     return False
+
+
+# 13: Find Rotation Point
+# Runtime: O(lg(n))
+# Space: O(1)
+# Edge cases: already sorted
+def find_rotation(arr):
+    """Returns the index of the rotation point
+
+        >>> find_rotation(['play', 'xebra', 'bat', 'cat', 'dog'])
+        2
+
+        >>> find_rotation(['ptolemaic','retrograde','supplant','undulate','xenoepist','asymptote','babka','banoffee','engender','karpatka','othellolagkage'])
+        5
+
+    """
+
+    floor = 0
+    ceiling = len(arr)-1
+
+    # edge case: already sorted
+    if arr[ceiling] > arr[floor]:
+        return floor
+
+    # check middle
+    while ceiling - floor > 1:
+
+        guess_idx = floor + (ceiling - floor) / 2
+
+        # option 1: rotation is before guess
+        if arr[guess_idx] < arr[floor]:
+            ceiling = guess_idx
+
+        # option 1: rotation is after guess
+        else: 
+            floor = guess_idx
+
+    # when floor and ceiling are one apart, ceiling will be rotation
+    return ceiling
+
+
+
+
+
 
 
 

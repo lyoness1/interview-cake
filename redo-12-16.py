@@ -122,8 +122,8 @@ def find_movies(flight_length, movies):
 
 
 # 15: Fibonacci
-# Runtime: 
-# Space: 
+# Runtime: O(n)
+# Space: O(1) not recursive bc of callstack 
 # Edge cases: 0, 1
 def get_nth_fib(n):
     """Returns the nth Fibonacci number
@@ -153,6 +153,59 @@ def get_nth_fib(n):
         step += 1 
 
     return fib
+
+
+# 16: Cake Thief
+# Runtime: O(n*m), n is types of cakes, m is capacity
+# Space: O(m) for memo
+# Edge cases:
+def steal_cakes(cakes, capacity):
+    """Returns max value of cakes that fit into capacity
+
+        >>> steal_cakes([(7, 160), (3, 90), (2, 15)], 20)
+        555
+
+        >>> steal_cakes([(3, 40), (5, 70)], 9)
+        120
+
+        >>> steal_cakes([(3, 40), (5, 70)], 0)
+        0
+
+        >>> steal_cakes([(0, 40), (5, 70)], 10)
+        inf
+
+    """
+
+    # initialize variable to track max value
+    max_value = 0
+
+    # use memoization, bottom-up strategy to track max value for each weight
+    # capacity up to the total capacity
+    memo = [0] * (capacity + 1)
+
+    # iterate over each cake type
+    for weight, value in cakes:
+
+        # edge case: 0 weight, some value
+        if weight == 0 and value > 0:
+            return float('inf')
+
+        # iterate over each weight, keeping track of max values for each weight
+        for kilos in xrange(weight, capacity+1):
+
+            remainder = kilos - weight
+
+            # found a bigger value at given weight:
+            memo[kilos] = max(memo[kilos], value + memo[remainder])
+
+            # update max possible value of all cake/weight combos
+            max_value = max(max_value, memo[kilos])
+
+    return max_value
+
+
+
+
 
 
 

@@ -46,7 +46,9 @@ def find_rotation(arr):
         >>> find_rotation(['play', 'xebra', 'bat', 'cat', 'dog'])
         2
 
-        >>> find_rotation(['ptolemaic','retrograde','supplant','undulate','xenoepist','asymptote','babka','banoffee','engender','karpatka','othellolagkage'])
+        >>> find_rotation(['ptolemaic','retrograde','supplant','undulate',
+        ... 'xenoepist','asymptote','babka','banoffee','engender','karpatka',
+        ... 'othellolagkage'])
         5
 
     """
@@ -75,6 +77,82 @@ def find_rotation(arr):
     return ceiling
 
 
+# 14: In Flight Movies
+# Runtime: O(nlg(n)) to sort
+# Space: O(1)
+# Edge cases: multiple movies same length, ties
+def find_movies(flight_length, movies):
+    """Returns two movies that can be watched during flight time
+
+    >>> find_movies(120, [60, 30, 70, 80, 40, 30, 60, 90])
+    [(30, 90), (30, 90), (40, 80), (60, 60)]
+
+    """
+
+    movies.sort()  # [30, 30, 40, 60, 60, 70, 80, 90]
+
+    floor = 0
+    ceiling = len(movies)-1
+
+    output = []
+
+    while ceiling - floor >= 1:
+
+        # if floor and celing movies match flight time, add to output
+        if movies[floor] + movies[ceiling] == flight_length:
+            output.append((movies[floor], movies[ceiling]))
+            # account for same length but didtinct movies in list
+            if movies[floor+1] == movies[floor]: 
+                floor += 1
+            elif movies[ceiling-1] == movies[ceiling]:
+                ceiling -= 1
+            else:
+                floor += 1
+                ceiling -= 1
+
+        # if the sum of movie lengths is too long, decrease ceiling
+        elif movies[floor] + movies[ceiling] > flight_length:
+            ceiling -= 1
+
+        # if the sum of movie lengths is too short, increment floor
+        else:
+            floor += 1
+
+    return output
+
+
+# 15: Fibonacci
+# Runtime: 
+# Space: 
+# Edge cases: 0, 1
+def get_nth_fib(n):
+    """Returns the nth Fibonacci number
+
+        >>> get_nth_fib(4)
+        3
+
+        >>> get_nth_fib(6)
+        8
+
+    """
+
+    if n in [0, 1]:
+        return n
+
+    prev2 = 0
+    prev1 = 1
+    fib = prev1 + prev2
+    step = 2
+
+    while step < n:
+
+        prev2 = prev1
+        prev1 = fib
+        fib = prev2 + prev1
+
+        step += 1 
+
+    return fib
 
 
 

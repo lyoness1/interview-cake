@@ -123,28 +123,29 @@ def make_permutations(phrase):
         set(['abth', 'hbta', 'bath', 'bhat', 'tbha', 'ahtb', 'atbh', 'hatb', 'thba', 'btha', 'htab', 'abht', 'ahbt', 'tbah', 'bhta', 'baht', 'habt', 'thab', 'athb', 'btah', 'tabh', 'htba', 'tahb', 'hbat'])
 
     """
-    
-    # base case: one long
-    if len(phrase) < 2:
+
+    # base case: phrase is one letter long
+    if len(phrase) <= 1:
         return set([phrase])
 
-    # split phrase into one letter and rest of letters
+    # break into one letter and other letters
     last_char = phrase[-1]
     other_chars = phrase[:-1]
 
-    # get all possibilities
-    smaller_perms = make_permutations(other_chars)
+    # calculate perms of smaller phrase using recursion 
+    small_perms = make_permutations(other_chars)
 
-    # initailize output set
-    perms = set()
+    # initaialize output
+    permutations = set()
 
-    # put missing letter in each possible location within smaller perms
-    for smaller_perm in smaller_perms:
-        for i in xrange(len(phrase)):
-            perms.add(smaller_perm[:i] + last_char + smaller_perm[i:])
+    # combine letter with smaller perms in every possible way
+    for small_perm in small_perms:
+        for i in xrange(len(small_perm)+1):
+            permutations.add(small_perm[:i] + last_char + small_perm[i:])
 
-    return perms
+    return permutations
 
+    
 
 # 32: Sort Game Scores
 # Runtime: O(2n) --> O(n)

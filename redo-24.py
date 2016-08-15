@@ -20,7 +20,7 @@ def reverse_ll(head):
 
     prev = head
     curr = head.next
-    
+
     # update pointer for old head to None as new tail
     prev.next = None
 

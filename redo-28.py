@@ -71,6 +71,109 @@ def parse_braces(sentence):
         return False
 
 
+# 30: Is any permutation of input a palindrome?
+# Runtime: O(n)
+# Space: O(n)
+# Edge cases:
+def is_palindrome(str):
+    """Returns boolean to indicate palindrome present
+
+        >>> is_palindrome("civic")
+        True
+
+        >>> is_palindrome("ivicc")
+        True
+
+        >>> is_palindrome("civil")
+        False
+
+        >>> is_palindrome("livci")
+        False
+
+    """
+
+    char_counts = {}
+
+    for char in str:
+        if char not in char_counts:
+            char_counts[char] = 1
+        else: 
+            char_counts[char] += 1
+
+    odds = 0
+
+    for count in char_counts.values():
+        if count % 2 != 0:
+            odds += 1
+
+    if odds > 1:
+        return False
+
+    return True
+
+
+# 31: All permutations of input string
+# Runtime:
+# Space: 
+# Edge cases: 
+def make_permutations(phrase):
+    """Returns all permutations of an input string using recursion
+
+        >>> make_permutations('bath')
+        set(['abth', 'hbta', 'bath', 'bhat', 'tbha', 'ahtb', 'atbh', 'hatb', 'thba', 'btha', 'htab', 'abht', 'ahbt', 'tbah', 'bhta', 'baht', 'habt', 'thab', 'athb', 'btah', 'tabh', 'htba', 'tahb', 'hbat'])
+
+    """
+    
+    # base case: one long
+    if len(phrase) < 2:
+        return set([phrase])
+
+    # split phrase into one letter and rest of letters
+    last_char = phrase[-1]
+    other_chars = phrase[:-1]
+
+    # get all possibilities
+    smaller_perms = make_permutations(other_chars)
+
+    # initailize output set
+    perms = set()
+
+    # put missing letter in each possible location within smaller perms
+    for smaller_perm in smaller_perms:
+        for i in xrange(len(phrase)):
+            perms.add(smaller_perm[:i] + last_char + smaller_perm[i:])
+
+    return perms
+
+
+# 32: Sort Game Scores
+# Runtime: O(2n) --> O(n)
+# Space: O(2n) for histogram and output
+# Edge cases: 
+def sort_scores(unsorted, highest):
+    """Takes an unsorted arr and a max_score and returns sorted list
+
+        >>> sort_scores([20, 0, 40, 60, 15, 3, 80, 56, 60, 44, 90, 100], 100)
+        [0, 3, 15, 20, 40, 44, 56, 60, 60, 80, 90, 100]
+
+    """
+
+    scores = [0] * (highest + 1)
+
+    for num in unsorted:
+        scores[num] += 1
+
+    output = []
+
+    for idx, score in enumerate(scores):
+        for i in xrange(score):
+            output.append(idx)
+
+    return output
+
+
+
+
 
 
 

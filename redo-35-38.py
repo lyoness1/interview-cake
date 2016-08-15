@@ -62,7 +62,19 @@ def is_riffle(deck, half1, half2):
     return True
 
 
+# 37: Rand7 --> Rand5
+# Runtime: 
+# Space: 
+# Edge cases: 
+def rand7():
+    return randint(1, 7)
 
+def rand5():
+    pick = rand7()
+    if pick < 6:
+        return pick
+    else: 
+        return rand5()
 
 
 

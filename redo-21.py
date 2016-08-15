@@ -20,7 +20,8 @@ def find_drone(arr):
 
     return next(iter(checked_out))
 
-
+# runtime: O(n)
+# space: O(1)
 def find_drone_xor(arr):
     """Returns the ID that isn't repeated in arr
 
@@ -29,12 +30,18 @@ def find_drone_xor(arr):
 
     """
 
-    unique = 0
+    tracker = 0
 
     for item in arr:
-        unique ^= item
+        tracker ^= item
 
-    return unique
+    return tracker
+
+
+
+
+
+
 
 
 

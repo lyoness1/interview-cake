@@ -22,12 +22,14 @@ def shuffle(arr):
 
     L = len(arr) - 1
 
-    for i in xrange(len(arr)):
+    for i in xrange(L):
+        pick = randint(i, L)
+        arr[i], arr[pick] = arr[pick], arr[i]
 
-        idx_to_switch = randint(i, L)
-        arr[i], arr[idx_to_switch] = arr[idx_to_switch], arr[i]
+    # would return arr, but len(arr) is for doctest
+    return len(arr) 
 
-    return len(arr)
+
 
 
 # 36: Riffle

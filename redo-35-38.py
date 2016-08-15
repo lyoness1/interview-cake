@@ -63,8 +63,8 @@ def is_riffle(deck, half1, half2):
 
 
 # 37: Rand7 --> Rand5
-# Runtime: 
-# Space: 
+# Runtime: worst case is O('inf'), but unlikely. 
+# Space: O(1) for iterative solution, O('inf') for recursive solution
 # Edge cases: 
 def rand7():
     return randint(1, 7)
@@ -73,9 +73,29 @@ def rand5():
     pick = rand7()
     if pick < 6:
         return pick
-    else: 
-        return rand5()
+    else:
+        rand5()
 
+
+# 38: Rand5 --> Rand7
+# Runtime: worst case is O(inf) but unlikely
+# Space: O(1) for iterative, O(inf) for recursive (unlikely)
+# Edge cases: 
+def rando5():
+    return randint(1, 5)
+
+def rando7():
+
+    while True:
+
+        pick1 = rando5()
+        pick2 = rando5()
+
+        # 25 choices equal probability
+        pick = pick1 * pick2
+
+        if pick <= 21:
+            return (pick % 7) + 1
 
 
 

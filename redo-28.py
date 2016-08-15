@@ -172,7 +172,22 @@ def sort_scores(unsorted, highest):
     return output
 
 
+# 33: Find duplicate in range 1...n
+# Runtime: O(1)
+# Space: O(1)
+# Edge case: 
+def find_duplicate(arr):
+    """Returns the number that appears twice
 
+        >>> find_duplicate([1, 2, 3, 4, 5, 5, 6, 7, 8, 9])
+        5
+
+    """
+    # get max
+    n = len(arr) - 1
+
+    # duplicate number is actual sum minus expected sum w/o duplicate
+    return sum(arr) - ((n*n + n) / 2)
 
 
 

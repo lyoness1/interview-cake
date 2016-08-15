@@ -89,35 +89,34 @@ def find_dupe_beast(arr):
 
     """
 
-    # think of list as ll with index + 1 = position. 
-    # repeat will have two incoming pointers
-    # start at end of list, as it will never have two incoming pointers
+    # think of arr as a linked list with position = index + 1
+    # value at each position is the pointer to the next position
+
+    # STEP 1: get into cycle by progressing through list
     start = arr[-1]
-    second = start
-    # increment faster runner one so while loop will be entered
-    start = arr[start]
 
-    # get into a cycle
-    while start != second:
+    for _ in xrange(len(arr)):
         start = arr[start-1]
-        start = arr[start-1]
-        second = arr[second]
 
-    # find the length of the cycle by incrementing one runner until it loops
+    # STEP 2: find length of cycle
+    memo = start
     start = arr[start-1]
     steps = 1
-    while start != second:
+    while start != memo:
         start = arr[start-1]
-        steps += 1
 
-    # start over, with second runner at same speed but length of cycle behind
+    # STEP 3: traverse list with second runner "steps" steps behind first runner
     start = arr[-1]
-    second = start
-
     for _ in xrange(steps):
         start = arr[start-1]
 
-    # go around loop 
+    # STEP 4: go around loop until two meet. Meeting will be start of cycle
+    second = arr[-1]
+    while second != start:
+        start = arr[start-1]
+        second = arr[second-1]
+
+    return second
 
 
 

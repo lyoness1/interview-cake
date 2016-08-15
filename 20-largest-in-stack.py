@@ -86,3 +86,7 @@ class MaxStack2:
 
     def get_max(self):
         return self.max_stack.peek()
+
+
+
+

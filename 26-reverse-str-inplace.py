@@ -42,7 +42,22 @@ def manual_reverse(string):
 
 
 
+def IC_answer(string):
 
+    str_list = list(string)
+
+    left_pointer = 0
+    right_pointer = len(str_list) - 1
+
+    while left_pointer < right_pointer:
+
+        str_list[left_pointer], str_list[right_pointer] = \
+            str_list[right_pointer], str_list[left_pointer]
+
+        left_pointer += 1
+        right_pointer -= 1
+
+    return "".join(str_list)
 
 
 

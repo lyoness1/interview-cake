@@ -28,7 +28,7 @@ def delete_node(node):
 
     # reset node to delete's value to next node's value
     # update pointer
-    if node.next:
+    if next_node:
         node.value = next_node.value
         node.next = next_node.next
 

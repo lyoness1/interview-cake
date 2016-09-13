@@ -33,6 +33,8 @@ class Stack:
 
 # Your stacks will contain only integers.
 
+
+# My initial solution
 class MaxStack(Stack):
 
     # initialize MaxStack as a subclass of Stack, but add 'largest' attribute
@@ -44,7 +46,9 @@ class MaxStack(Stack):
     # constant runtime if each addition is a max
     def push(self, item):
         self.items.append(item)
-        if item > self.largest:
+        if not self.largest:
+            item = self.largest
+        if self.largest and item > self.largest:
             self.old_max = self.largest
             self.largest = item
 

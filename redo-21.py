@@ -33,11 +33,19 @@ def find_drone_xor(arr):
     tracker = 0
 
     for item in arr:
+        # XOR will turn 0 bits to 1's the first time they are seen
+        # it will turn 1 bits to 0's the second time they are seen
+        # whether 1 or 0, the bit will remain unchanged if item == 0 at that bit
         tracker ^= item
 
     return tracker
 
 
+# NOTE:
+# 1 ^ 1 = 0 (changed)
+# 1 ^ 0 = 1 (unchanged)
+# 0 ^ 1 = 1 (changed)
+# 0 ^ 0 = 0 (unchanged)
 
 
 

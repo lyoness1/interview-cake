@@ -41,3 +41,93 @@ We can solve this by wrapping our anonymous function in another anonymous functi
     }
     
 </script>
+
+<!-- This "freezes" the value of btnNum. Why? Well...
+
+Primitives vs. Objects
+
+btnNum is a number, which is a primitive type in JavaScript.
+
+Primitives are "simple" data types (string, number, boolean, null, and undefined in JavaScript). Everything else is an object in JavaScript (functions, arrays, Date() values, etc).
+
+Arguments Passed by Value vs. Arguments Passed by Reference
+
+One important property of primitives in JS is that when they are passed as arguments to a function, they are copied ("passed by value"). So for example:
+
+Heads up: This is not well-formed JavaScript. We're using it to prove a point. -->
+
+<script type="text/javascript">
+
+    var threatLevel = 1;
+
+    function inspireFear(threatLevel){
+        threatLevel += 100;
+    }
+
+    inspireFear(threatLevel);
+    console.log(threatLevel); // Whoops! It's still 1!
+
+</script>
+
+<!-- The threatLevel inside inspireFear() is a new number, initialized to the same value as the threatLevel outside of inspireFear(). Giving these different variables the same name might cause confusion here. If we change the two variables to have different names we get the exact same behavior: -->
+
+<script type="text/javascript">
+
+    var threatLevel = 1;
+
+    function inspireFear(theThreatLevel){
+        theThreatLevel += 100;
+    }
+
+    inspireFear(threatLevel);
+    console.log(threatLevel); // Whoops! It's still 1!
+
+</script>
+
+<!-- In contrast, when a function takes an object, it actually takes a reference to that very object. So changes you make to the object in the function persist after the function is done running. This is sometimes called a side effect. -->
+
+<script type="text/javascript">
+    var scaryThings = ['spiders', 'Cruella de Vil'];
+
+    function inspireFear(scaryThings){
+        scaryThings.push('nobody ever using Interview Cake');
+        scaryThings.push('i should have gotten a real job');
+        scaryThings.push('why am i doing this to myself');
+    }
+
+    inspireFear(scaryThings);
+    console.log(scaryThings);
+    // ['spiders', 'Cruella de Vil', 'nobody ever using Interview Cake', 'i should have gotten a real job', 'why am i doing this to myself']
+
+</script>
+
+<!-- Bringing it home -->
+
+<!-- Back to our solution: -->
+
+<button id="btn-0">Button 1!</button>
+<button id="btn-1">Button 2!</button>
+<button id="btn-2">Button 3!</button>
+
+<script type="text/javascript">
+
+    var prizes = ['A Unicorn!', 'A Hug!', 'Fresh Laundry!'];
+    for (var btnNum = 0; btnNum < prizes.length; btnNum++) {
+        // for each of our buttons, when the user clicks it...
+        document.getElementById('btn-' + btnNum).onclick = function(frozenBtnNum){
+            return function() {
+                // tell her what she's won!
+                alert(prizes[frozenBtnNum]);
+            };
+        }(btnNum);
+    }
+
+</script>
+
+<!-- HTML
+So when we pass btnNum to the outer anonymous function as its one argument, we create a new number inside the outer anonymous function called frozenBtnNum that has the value that btnNum had at that moment (0, 1, or 2).
+
+Our inner anonymous function is still a closure because it still reaches outside its scope, but now it closes over this new number called frozenBtnNum, whose value will not change as we iterate through our for loop. -->
+
+<!-- What We Learned -->
+<!-- Like several common interview questions, this question hinges on a solid understanding of closures and pass by reference vs pass by value. If you're shaky on either of those, look back at the examples in the solution. -->

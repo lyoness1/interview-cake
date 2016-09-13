@@ -69,7 +69,7 @@ def find_rotation(arr):
         if arr[guess_idx] < arr[floor]:
             ceiling = guess_idx
 
-        # option 1: rotation is after guess
+        # option 2: rotation is after guess
         else: 
             floor = guess_idx
 
@@ -202,6 +202,51 @@ def steal_cakes(cakes, capacity):
             max_value = max(max_value, memo[kilos])
 
     return max_value
+
+
+def redo_cakes(cakes, capacity):
+    """Returns max value of cakes that fit into capacity
+        cakes = [(weight, value), (weight, value), etc.]
+
+        >>> steal_cakes([(7, 160), (3, 90), (2, 15)], 20)
+        555
+
+        >>> steal_cakes([(3, 40), (5, 70)], 9)
+        120
+
+        >>> steal_cakes([(3, 40), (5, 70)], 0)
+        0
+
+        >>> steal_cakes([(0, 40), (5, 70)], 10)
+        inf
+
+    """
+
+    # track maximum able to steal 
+    overal_max = 0
+
+    # keep track of max ability to steal at each weight capacity
+    memo = [0] * (capacity + 1)
+
+    # iterate over each type of cake
+    for weight, value in cakes:
+
+        # account for zero weight cakes
+        if weight == 0 and value > 0:
+            return float('inf')
+
+        # iterate over each weight value from cake weight through capacity
+        for curr_weight in xrange(weight, capacity+1):
+
+            # value at current weight is larger of previous value or new
+            capacity_remaining = curr_weight - weight
+            # only record value if greater than old value
+            memo[curr_weight] = max(memo[curr_weight],
+                                    value + memo[capacity_remaining])
+
+            overal_max = max(overal_max, memo[curr_weight])
+
+    return overal_max
 
 
 

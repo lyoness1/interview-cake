@@ -174,25 +174,55 @@ def make_change(amt, coins):
             # ways to make *total* += ways (*total* - *coin*)
 
             # coin = 1c, progress through *totals*
-            # ways to make 1c += ways to make (1-1) = 0 + 1 = 1
-            # ways to make 2c += ways to make (2-1) = 0 + 1 = 1
-            # ways to make 3c += ways to make (3-1) = 0 + 1 = 1
-            # ways to make 4c += ways to make (4-1) = 0 + 1 = 1
+            # ways to make 1c += ways to make (1-1 = 0) = 0 + 1 = 1
+            #   [1, 1, 0, 0, 0]
+            # ways to make 2c += ways to make (2-1 = 1) = 0 + 1 = 1
+            #   [1, 1, 1, 0, 0]
+            # ways to make 3c += ways to make (3-1 = 2) = 0 + 1 = 1
+            #   [1, 1, 1, 1, 0]
+            # ways to make 4c += ways to make (4-1 = 3) = 0 + 1 = 1
+            #   [1, 1, 1, 1, 1]
 
             # coin = 2c, progress through *totals*
-            # ways to make 2c += ways to make (2-2) = 1 + 1 = 2
-            # ways to make 3c += ways to make (3-2) = 1 + 1 = 2
-            # ways to make 4c += ways to make (4-2) = 1 + 2 = 3
+            # ways to make 2c += ways to make (2-2 = 0) = 1 + 1 = 2
+            #   [1, 1, 2, 1, 1]
+            # ways to make 3c += ways to make (3-2 = 1) = 1 + 1 = 2
+            #   [1, 1, 2, 2, 1]
+            # ways to make 4c += ways to make (4-2 = 2) = 1 + 2 = 3
+            #   [1, 1, 2, 2, 3]
 
             # coin = 3c, progress through *totals*
-            # ways to make 3c += ways to make (3-3) = 2 + 1 = 3
-            # ways to make 4c += ways to make (4-3) = 3 + 1 = 4
+            # ways to make 3c += ways to make (3-3 = 0) = 2 + 1 = 3
+            #   [1, 1, 2, 3, 3]
+            # ways to make 4c += ways to make (4-3 = 1) = 3 + 1 = 4
+            #   [1, 1, 2, 3, 4]
 
     return ways_of_doing_n_cents[amt]
 
 
 
+def redo_num_ways(amt, coins):
+    """Determines the number of ways to make amt with denom's in coins list
 
+    >>> redo_num_ways(4, [1, 2, 3])
+    4
+
+    """
+    # ways is the number of ways to make amount at each index
+    ways = [0] * (amt + 1)
+    ways[0] = 1
+
+    for coin in coins: 
+
+        for value in range(coin, amt+1):
+
+            # Ex: coin = 2, value = 3, ways = [1, 1, 2, 1, 1]
+            # Ex: remainder = 3 - 2 = 1
+            # Ex: ways[3] = ways[3] + ways[1] = 1 + 1 = 2
+            remainder = value - coin
+            ways[value] += ways[remainder]
+
+    return ways[amt]
 
 
 

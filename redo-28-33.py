@@ -145,7 +145,38 @@ def make_permutations(phrase):
 
     return permutations
 
-    
+
+def retry_make_permutations(phrase):
+    """Returns all permutations of an input string using recursion
+
+        >>> make_permutations('bath')
+        set(['abth', 'hbta', 'bath', 'bhat', 'tbha', 'ahtb', 'atbh', 'hatb', 'thba', 'btha', 'htab', 'abht', 'ahbt', 'tbah', 'bhta', 'baht', 'habt', 'thab', 'athb', 'btah', 'tabh', 'htba', 'tahb', 'hbat'])
+
+    """
+
+    # base case: length of string is one long
+    if len(phrase) == 1:
+        # use a list inside a set so it is mutable
+        return set([phrase])
+
+    # remove one char and recurse on remaining chars
+    char_out = phrase[-1]
+    rest = phrase[:-1]
+
+    # recurse until length of rest == 1
+    smaller_perms = retry_make_permutations(rest)
+
+    # add smaller perms to full perms set, putting char_out back in everywhere
+    perms = set()
+    for smaller_perm in smaller_perms:
+        for i in xrange(len(smaller_perm)+1):
+            perms.append(smaller_perm[:i] + char_out + smaller_perm[i:])
+
+    return perms
+
+
+
+
 
 # 32: Sort Game Scores
 # Runtime: O(2n) --> O(n)

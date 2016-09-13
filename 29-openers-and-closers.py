@@ -61,6 +61,56 @@ def parse_braces(sentence):
     return False
 
 
+def try_again(phrase):
+    """Returns boolean for whether braces are properly closed
+
+    >>> parse_braces("{ [ ] ( ) }")
+    True
+
+    >>> parse_braces("{ [ ( ] ) }")
+    False
+
+    >>> parse_braces("{ [ }")
+    False
+
+    """
+
+    matches = {
+        "(" : ")",
+        "[" : "]",
+        "{" : "}"
+    }
+
+    openers = frozenset(matches.keys())
+    closers = frozenset(matches.values())
+
+    openers_stack = []
+
+    for char in phrase: 
+
+        # keep track of openers in stack
+        if char in openers:
+            openers_stack.append(char)
+
+        # when a closer is found
+        elif char in closers:
+            # option 1: fails because there wasn't enough openers
+            if not openers_stack:
+                return False
+            # option 2: fails if the most recent opener wasn't a match
+            else:
+                latest_opener = openers_stack.pop()
+                if matches[latest_opener] != char:
+                    return False
+
+    # option 3: fails if too many openers, succeeds if all closed properly
+    return openers_stack == []
+
+
+
+
+
+
 
 
 

@@ -34,7 +34,33 @@ def find_closing_paren(sentence, pos):
 
 # Runtime O(n)
 # Space O(number of parenthesis)
+
+
 # To do in O(1): just count open's and closed as int variables (length of stack)
+def try_again(phrase, pos):
+    """Returns the location of a closing parenthesis, given and opening one
+
+    >>> find_closing_paren("Sometimes (when I nest them (my parentheticals) too much (like this (and this))) they get confusing.", 10)
+    79
+
+    """
+
+    start = 0
+
+    for i, char in enumerate(phrase, pos):
+        if char == "(":
+            start += 1
+        elif char == ")":
+            if start == 0:
+                return i
+            else:
+                start -= 1
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

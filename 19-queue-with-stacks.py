@@ -54,6 +54,6 @@ class Que:
 # why? Items only move from in stack to out stack ONCE in their lifetime. 
 # look at cost for each item, not for each call of the method. 
 # each item will be put on in_stack, then moved to out_stack (or just dq'ed)
-# then returned. It doesn't got back and forth. This is O(1) for each item. 
+# then returned. It doesn't go back and forth. This is O(1) for each item. 
 # so the total runtime is just the number of THINGS that get queued, where
 # each thing has constant nq/dq runtime. Total THINGS = m, runtime: O(m)

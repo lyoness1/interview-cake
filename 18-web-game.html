@@ -33,10 +33,12 @@ We can solve this by wrapping our anonymous function in another anonymous functi
     for (var btnNum = 0; btnNum < prizes.length; btnNum++) {
         // for each of our buttons, when the user clicks it...
         document.getElementById('btn-' + btnNum).onclick = function(frozenBtnNum){
+
             return function() {
                 // tell her what she's won!
                 alert(prizes[frozenBtnNum]);
             };
+            
         }(btnNum); // LOOK! We're passing btnNum to our anonymous function here!
     }
     
@@ -52,7 +54,9 @@ Primitives are "simple" data types (string, number, boolean, null, and undefined
 
 Arguments Passed by Value vs. Arguments Passed by Reference
 
+********************************************************************************
 One important property of primitives in JS is that when they are passed as arguments to a function, they are copied ("passed by value"). So for example:
+********************************************************************************
 
 Heads up: This is not well-formed JavaScript. We're using it to prove a point. -->
 
@@ -84,7 +88,9 @@ Heads up: This is not well-formed JavaScript. We're using it to prove a point. -
 
 </script>
 
-<!-- In contrast, when a function takes an object, it actually takes a reference to that very object. So changes you make to the object in the function persist after the function is done running. This is sometimes called a side effect. -->
+<!-- ***************************************************************************
+In contrast, when a function takes an object, it actually takes a reference to that very object. So changes you make to the object in the function persist after the function is done running. This is sometimes called a side effect. 
+**************************************************************************** -->
 
 <script type="text/javascript">
     var scaryThings = ['spiders', 'Cruella de Vil'];
